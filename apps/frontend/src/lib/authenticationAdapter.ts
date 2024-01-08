@@ -6,7 +6,7 @@ import { useAuthStore } from "../store/useAuthStore"
 
 export const authenticationAdapter = createAuthenticationAdapter({
   getNonce: async () => {
-    const response = await fetch("/api/nonce")
+    const response = await fetch("/api/siwe/nonce")
     return await response.text()
   },
 
@@ -28,7 +28,7 @@ export const authenticationAdapter = createAuthenticationAdapter({
   },
 
   verify: async ({ message, signature }) => {
-    const verifyRes = await fetch("/api/verify", {
+    const verifyRes = await fetch("/api/siwe/verify", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message, signature }),
@@ -46,7 +46,7 @@ export const authenticationAdapter = createAuthenticationAdapter({
   },
 
   signOut: async () => {
-    const logoutRes = await fetch("/api/logout")
+    const logoutRes = await fetch("/api/siwe/logout")
     if (logoutRes.ok) {
       const setAuthStatus = useAuthStore.getState().setAuthStatus
       setAuthStatus("unauthenticated")

@@ -3,10 +3,11 @@ import "dotenv/config"
 
 import { json, urlencoded } from "body-parser"
 import cors from "cors"
-import express, { type Express } from "express"
+import express, { Router, type Express } from "express"
 import session from "express-session"
 
 import { injectSiweRoutes } from "./routes/siwe"
+import { injectUserRoutes } from "./routes/user"
 
 export const createServer = (): Express => {
   const app = express()
@@ -22,8 +23,12 @@ export const createServer = (): Express => {
       cookie: { secure: process.env.NODE_ENV === "production" },
     })
   )
-
-  injectSiweRoutes(app)
-
+  const apiRoutes = Router()
+  // Sign in with Ethereum routes
+  injectSiweRoutes(apiRoutes)
+  // User routes
+  injectUserRoutes(apiRoutes)
+  // Add prefix to all routes
+  app.use("/api", apiRoutes)
   return app
 }

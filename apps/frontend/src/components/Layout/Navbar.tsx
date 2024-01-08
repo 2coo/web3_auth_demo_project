@@ -28,7 +28,7 @@ export const Navbar: FC = () => {
 
             return (
               <>
-                <ConnectButton />
+                <ConnectButton showBalance={false} />
                 <Link to="/profile">
                   <button className="btn btn-square">
                     <Settings size={24} />
