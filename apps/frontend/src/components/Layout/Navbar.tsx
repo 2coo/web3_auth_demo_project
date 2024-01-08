@@ -8,7 +8,7 @@ export const Navbar: FC = () => {
     <div className="navbar bg-base-300">
       <div className="flex-1">
         <Link to="/" className="btn btn-ghost text-xl italic">
-          USECYAN
+          WEB3 AUTH DEMO
         </Link>
       </div>
       <div className="flex-none gap-3">

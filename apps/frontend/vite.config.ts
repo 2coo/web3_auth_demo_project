@@ -18,4 +18,14 @@ export default defineConfig({
       "~/": `${__dirname}/src/`,
     },
   },
+  define: {
+    global: "globalThis",
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      define: {
+        global: "globalThis",
+      },
+    },
+  },
 })
