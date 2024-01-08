@@ -1,0 +1,49 @@
+{
+  "name": "web3_auth_demo_project",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "commit": "cz",
+    "prepare": "husky install",
+    "dev:all": "concurrently -n backend,frontend \"pnpm --filter backend dev \" \"pnpm --filter frontend dev\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@commitlint/cli": "^17.6.3",
+    "@commitlint/config-conventional": "^17.6.3",
+    "@commitlint/cz-commitlint": "^17.5.0",
+    "@commitlint/types": "^17.4.4",
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+    "commitizen": "^4.3.0",
+    "concurrently": "^8.2.2",
+    "husky": "^8.0.0",
+    "lint-staged": "^14.0.0",
+    "prettier": "^3.1.1"
+  },
+  "lint-staged": {
+    "apps/**/*.{js,ts,jsx,tsx}": [
+      "prettier --write",
+      "eslint"
+    ],
+    "*.json": [
+      "prettier --write"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "prepare-commit-msg": "exec < /dev/tty && npx cz --hook || true"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "packageManager": "pnpm@8.5.0",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=6.0.0"
+  }
+}

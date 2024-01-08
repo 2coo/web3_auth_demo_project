@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Lint, Test, Prettier
+pnpm exec lint-staged --concurrent false
