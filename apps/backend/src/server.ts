@@ -13,8 +13,9 @@ export const createServer = (): Express => {
   const app = express()
 
   app.use(cors())
-  app.use(json())
+
   app.use(urlencoded({ extended: true }))
+  app.use(json())
   app.use(
     session({
       secret: process.env.SESSION_SECRET || "secret",
@@ -23,6 +24,7 @@ export const createServer = (): Express => {
       cookie: { secure: process.env.NODE_ENV === "production" },
     })
   )
+
   const apiRoutes = Router()
   // Sign in with Ethereum routes
   injectSiweRoutes(apiRoutes)
@@ -30,5 +32,6 @@ export const createServer = (): Express => {
   injectUserRoutes(apiRoutes)
   // Add prefix to all routes
   app.use("/api", apiRoutes)
+
   return app
 }

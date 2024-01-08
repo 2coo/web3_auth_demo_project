@@ -36,11 +36,11 @@ export const CustomConnectButton = () => {
               if (!connected) {
                 return (
                   <button
-                    className="btn btn-primary"
+                    className="btn btn-primary btn-lg"
                     onClick={openConnectModal}
                     type="button">
                     <Wallet />
-                    Login
+                    Click here to login
                   </button>
                 )
               }

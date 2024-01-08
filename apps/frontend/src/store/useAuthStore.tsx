@@ -1,6 +1,6 @@
 import { AuthenticationStatus } from "@rainbow-me/rainbowkit"
 import { create } from "zustand"
-import { persist, createJSONStorage } from "zustand/middleware"
+import { persist } from "zustand/middleware"
 
 interface AuthStore {
   status: AuthenticationStatus
@@ -15,7 +15,6 @@ export const useAuthStore = create<AuthStore>()(
     }),
     {
       name: "auth-storage",
-      storage: createJSONStorage(() => sessionStorage),
     }
   )
 )

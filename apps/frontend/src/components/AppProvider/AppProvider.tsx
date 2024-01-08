@@ -5,7 +5,7 @@ import {
 } from "@rainbow-me/rainbowkit"
 import "@rainbow-me/rainbowkit/styles.css"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { FC, PropsWithChildren } from "react"
+import { FC, PropsWithChildren, useMemo } from "react"
 import { configureChains, createConfig, WagmiConfig } from "wagmi"
 import { mainnet } from "wagmi/chains"
 import { publicProvider } from "wagmi/providers/public"
@@ -31,10 +31,11 @@ const queryClient = new QueryClient()
 
 export const AppProvider: FC<PropsWithChildren> = ({ children }) => {
   const authStatus = useAuthStore((state) => state.status)
+  const authAdapter = useMemo(() => authenticationAdapter, [])
   return (
     <WagmiConfig config={wagmiConfig}>
       <RainbowKitAuthenticationProvider
-        adapter={authenticationAdapter}
+        adapter={authAdapter}
         status={authStatus}>
         <RainbowKitProvider modalSize="compact" chains={chains}>
           <QueryClientProvider client={queryClient}>

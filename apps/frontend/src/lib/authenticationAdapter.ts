@@ -2,6 +2,7 @@ import { createAuthenticationAdapter } from "@rainbow-me/rainbowkit"
 import { addDays } from "date-fns"
 import { SiweMessage } from "siwe"
 
+import { router } from "~/routes"
 import { useAuthStore } from "~/store/useAuthStore"
 
 export const authenticationAdapter = createAuthenticationAdapter({
@@ -39,6 +40,12 @@ export const authenticationAdapter = createAuthenticationAdapter({
     const setAuthStatus = useAuthStore.getState().setAuthStatus
     if (verified) {
       setAuthStatus("authenticated")
+      const paramsString = window.location.search
+      const searchParams = new URLSearchParams(paramsString)
+      const redirect = searchParams.get("redirect")
+      if (searchParams.has("redirect") && redirect) {
+        router.history.push(redirect)
+      }
     } else {
       setAuthStatus("unauthenticated")
     }
