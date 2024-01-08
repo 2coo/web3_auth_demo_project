@@ -1,7 +1,7 @@
 import { useQuery } from "wagmi"
 
-import { useAuthStore } from "../store/useAuthStore"
-import { UserInfo } from "../types/user"
+import { useAuthStore } from "~/store/useAuthStore"
+import { UserInfo } from "~/types/user"
 
 const fetchUser = async () => {
   const response = await fetch("/api/me")

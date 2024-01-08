@@ -2,7 +2,7 @@ import { createAuthenticationAdapter } from "@rainbow-me/rainbowkit"
 import { addDays } from "date-fns"
 import { SiweMessage } from "siwe"
 
-import { useAuthStore } from "../store/useAuthStore"
+import { useAuthStore } from "~/store/useAuthStore"
 
 export const authenticationAdapter = createAuthenticationAdapter({
   getNonce: async () => {

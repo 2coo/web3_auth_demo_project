@@ -10,8 +10,8 @@ import { configureChains, createConfig, WagmiConfig } from "wagmi"
 import { mainnet } from "wagmi/chains"
 import { publicProvider } from "wagmi/providers/public"
 
-import { authenticationAdapter } from "../../lib/authenticationAdapter"
-import { useAuthStore } from "../../store/useAuthStore"
+import { authenticationAdapter } from "~/lib/authenticationAdapter"
+import { useAuthStore } from "~/store/useAuthStore"
 
 const { chains, publicClient } = configureChains([mainnet], [publicProvider()])
 

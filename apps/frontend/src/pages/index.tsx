@@ -1,4 +1,4 @@
-import { CustomConnectButton } from "../components/ConnectButton/ConnectButton"
+import { CustomConnectButton } from "~/components/ConnectButton/ConnectButton"
 
 export const HomePage = () => {
   return (
