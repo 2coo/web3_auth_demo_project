@@ -8,19 +8,12 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { FC, PropsWithChildren } from "react"
 import { configureChains, createConfig, WagmiConfig } from "wagmi"
 import { mainnet } from "wagmi/chains"
-import { alchemyProvider } from "wagmi/providers/alchemy"
 import { publicProvider } from "wagmi/providers/public"
 
 import { authenticationAdapter } from "../../lib/authenticationAdapter"
 import { useAuthStore } from "../../store/useAuthStore"
 
-const { chains, publicClient } = configureChains(
-  [mainnet],
-  [
-    alchemyProvider({ apiKey: import.meta.env.VITE_ALCHEMY_API_KEY }),
-    publicProvider(),
-  ]
-)
+const { chains, publicClient } = configureChains([mainnet], [publicProvider()])
 
 const { connectors } = getDefaultWallets({
   appName: "Tucoo - Web3 Auth Demo",
