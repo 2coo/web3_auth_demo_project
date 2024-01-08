@@ -22,4 +22,26 @@ module.exports = {
   },
   parser: "@typescript-eslint/parser",
   ignorePatterns: ["node_modules", "dist", "build", "**/*.config.ts"],
+  rules: {
+    "import/no-extraneous-dependencies": [
+      "off",
+      {
+        devDependencies: true,
+      },
+    ],
+    "@typescript-eslint/no-unsafe-call": "off",
+    "import/order": [
+      "error",
+      {
+        pathGroups: [
+          {
+            pattern: "~/**",
+            group: "external",
+          },
+        ],
+      },
+    ],
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-misused-promises": "off"
+  },
 }
