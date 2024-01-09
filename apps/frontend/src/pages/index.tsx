@@ -36,7 +36,7 @@ export const HomePage = () => {
 
     reset({
       email: user.email ?? undefined,
-      phoneNumber: String(user.phoneNumber) ?? undefined,
+      phoneNumber: user.phoneNumber ? String(user.phoneNumber) : undefined,
     })
   }, [reset, user, isUserReady])
 
