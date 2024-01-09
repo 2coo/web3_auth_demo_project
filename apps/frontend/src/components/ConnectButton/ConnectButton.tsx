@@ -24,6 +24,7 @@ export const CustomConnectButton = () => {
 
         return (
           <div
+            className="flex justify-center"
             {...(!ready && {
               "aria-hidden": true,
               style: {
@@ -36,7 +37,7 @@ export const CustomConnectButton = () => {
               if (!connected) {
                 return (
                   <button
-                    className="btn btn-primary btn-lg"
+                    className="btn btn-lg flex h-[68px] w-[243px] items-center justify-center rounded-[100px] bg-gradient-to-r from-blue-500 to-indigo-500 text-white"
                     onClick={openConnectModal}
                     type="button">
                     <Wallet />

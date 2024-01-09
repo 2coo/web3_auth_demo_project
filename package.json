@@ -5,7 +5,8 @@
   "scripts": {
     "commit": "cz",
     "prepare": "husky install",
-    "dev:all": "concurrently -n backend,frontend \"pnpm --filter backend dev \" \"pnpm --filter frontend dev\""
+    "setup:db": "pnpm --filter backend prisma db push",
+    "dev": "pnpm setup:db && concurrently -n backend,frontend \"pnpm --filter backend dev \" \"pnpm --filter frontend dev\""
   },
   "keywords": [],
   "author": "",

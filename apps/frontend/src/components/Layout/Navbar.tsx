@@ -1,6 +1,5 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 import { Link } from "@tanstack/react-router"
-import { Settings } from "lucide-react"
 import { FC } from "react"
 
 export const Navbar: FC = () => {
@@ -8,7 +7,7 @@ export const Navbar: FC = () => {
     <div className="navbar bg-base-300">
       <div className="flex-1">
         <Link to="/" className="btn btn-ghost text-xl italic">
-          WEB3 AUTH DEMO
+          LOGO
         </Link>
       </div>
       <div className="flex-none gap-3">
@@ -29,11 +28,6 @@ export const Navbar: FC = () => {
             return (
               <>
                 <ConnectButton showBalance={false} />
-                <Link to="/profile">
-                  <button className="btn btn-square">
-                    <Settings size={24} />
-                  </button>
-                </Link>
               </>
             )
           }}

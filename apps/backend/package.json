@@ -5,12 +5,14 @@
   "main": "dist/index.js",
   "scripts": {
     "postinstall": "prisma generate",
+    "predev": "prisma generate",
     "start": "node dist/index.js",
     "dev": "tsx watch --clear-screen=false src/index.ts",
     "build": "tsup",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src --ext .ts",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "prisma": "prisma"
   },
   "keywords": [],
   "author": "",
@@ -37,5 +39,8 @@
     "tsup": "^8.0.1",
     "tsx": "^4.7.0",
     "typescript": "^5.2.2"
+  },
+  "prisma": {
+    "schema": "prisma/schema.prisma"
   }
 }

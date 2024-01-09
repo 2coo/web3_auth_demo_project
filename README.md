@@ -12,7 +12,7 @@ $ pnpm install
 
 ```bash
 # Starts both frontend, and backend concurrently
-$ pnpm dev:all
+$ pnpm run dev
 ```
 
 Then open [http://localhost:5173](http://localhost:5173) on browser.
@@ -24,7 +24,7 @@ Then open [http://localhost:5173](http://localhost:5173) on browser.
 - React with Vite
 
   - RainbowKit
-  - SIWE (Sign in with Ethereum)
+  - [SIWE (Sign in with Ethereum)](https://docs.login.xyz/general-information/siwe-overview/eip-4361)
   - WAGMI
   - React Query (Tanstack)
   - React Router (Tanstack)
@@ -34,7 +34,7 @@ Then open [http://localhost:5173](http://localhost:5173) on browser.
 ### Backend
 
 - ExpressJS
-  - SIWE (Sign in with Ethereum)
+  - [SIWE (Sign in with Ethereum)](https://docs.login.xyz/general-information/siwe-overview/eip-4361)
   - Session based authentication
   - Sqlite + Prisma ORM
   - Zod

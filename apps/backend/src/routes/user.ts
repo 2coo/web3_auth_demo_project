@@ -7,7 +7,7 @@ import type { SessionSiwe } from "~/types/session"
 const routes = Router()
 
 // Get user's info
-routes.get("/", async (req, res) => {
+routes.get("/me", async (req, res) => {
   if (!req.session) {
     throw new Error("Session is not available")
   }
@@ -20,7 +20,7 @@ routes.get("/", async (req, res) => {
     return res.status(403).json({ message: "Forbidden" })
   }
 
-  const user = await db.user.findUniqueOrThrow({
+  const foundUser = await db.user.findFirst({
     where: {
       walletAddress: siwe.address,
     },
@@ -28,13 +28,13 @@ routes.get("/", async (req, res) => {
 
   res.status(200).json({
     address: siwe.address,
-    email: user.email,
-    phoneNumber: String(user.phoneNumber),
+    email: foundUser?.email,
+    phoneNumber: foundUser?.phoneNumber,
   })
 })
 
 // Update user's info
-routes.put("/", async (req, res) => {
+routes.put("/update", async (req, res) => {
   if (!req.session) {
     throw new Error("Session is not available")
   }

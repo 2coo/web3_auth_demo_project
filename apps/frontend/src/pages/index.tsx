@@ -1,63 +1,134 @@
-import { Link } from "@tanstack/react-router"
-import { FC } from "react"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useEffect } from "react"
+import type { SubmitHandler } from "react-hook-form"
+import { Controller, useForm } from "react-hook-form"
+import z from "zod"
 
 import { CustomConnectButton } from "~/components/ConnectButton/ConnectButton"
+import useUpdateUser from "~/hooks/useUpdateUser"
 import { useUser } from "~/hooks/useUser"
 import { useAuthStore } from "~/store/useAuthStore"
 
-const UserInfo: FC = () => {
+const phoneRegex = new RegExp(
+  /^(?:[+]?[\s0-9]+)?(?:\d{3}|[(]?[0-9]+[)])?(?:[-]?[\s]?[0-9])+$/
+)
+
+const schema = z.object({
+  email: z.string().email(),
+  phoneNumber: z.string().regex(phoneRegex, {
+    message: "Invalid phone number",
+  }),
+})
+
+type FormValues = z.infer<typeof schema>
+
+export const HomePage = () => {
+  const { data: user, isSuccess: isUserReady, isLoading } = useUser()
+
   const authStatus = useAuthStore((state) => state.status)
-  const user = useUser()
 
-  if (authStatus !== "authenticated") return <CustomConnectButton />
+  const { reset, control, handleSubmit } = useForm<FormValues>({
+    resolver: zodResolver(schema),
+  })
 
-  if (user.isLoading)
+  useEffect(() => {
+    if (!isUserReady || !user) return
+
+    reset({
+      email: user.email ?? undefined,
+      phoneNumber: String(user.phoneNumber) ?? undefined,
+    })
+  }, [reset, user, isUserReady])
+
+  const { mutate, isPending } = useUpdateUser()
+
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
+    mutate({
+      email: data.email,
+      phoneNumber: data.phoneNumber,
+    })
+  }
+
+  if (authStatus !== "authenticated") {
+    return (
+      <div className="flex flex-col justify-center gap-4">
+        <h3 className="font-gil text-center text-[24px] text-white">
+          Ethereum Wallet Authentication Web Application
+        </h3>
+        <div className="mt-4">
+          <CustomConnectButton />
+        </div>
+      </div>
+    )
+  }
+
+  if (isLoading)
     return (
       <button className="btn btn-square">
         <span className="loading loading-spinner"></span>
       </button>
     )
 
-  if (user.isSuccess && user.data) {
-    const { email, phoneNumber } = user.data
-    return (
-      <div className="card bg-neutral text-neutral-content w-96 p-4">
-        <div className="card-body items-center text-center">
-          <h2 className="card-title">Welcome!</h2>
-          <div className="mt-4 grid grid-cols-2 gap-4 ">
-            <div className="justify-self-start text-lg font-semibold text-white">
-              Email:&nbsp;
-            </div>
-            <div className="text-lg text-white">{email ?? "Empty"}</div>
-            <div className="justify-self-start text-lg font-semibold text-white">
-              Phone Number:&nbsp;
-            </div>
-            <div className="text-lg text-white">{phoneNumber ?? "Empty"}</div>
-          </div>
-          <div className="card-actions mt-6 justify-end">
-            <Link to="/profile">
-              <button className="btn btn-primary">Edit Profile</button>
-            </Link>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  return <CustomConnectButton />
-}
-
-export const HomePage = () => {
   return (
-    <div className="flex h-screen items-center justify-center">
-      <div className="flex flex-col items-center">
-        <h3 className="text-center font-['Roboto'] text-[64px] font-semibold text-white">
-          Welcome to Tucoo's Web3 Auth Demo!
-        </h3>
-        <div className="pt-2">
-          <UserInfo />
+    <>
+      <form onSubmit={handleSubmit(onSubmit)} className="w-full">
+        <div className="font-['GIP'] text-[32px] font-bold leading-loose text-white">
+          Edit Profile
         </div>
-      </div>
-    </div>
+        <Controller
+          name="email"
+          control={control}
+          render={({ field, fieldState: { error } }) => (
+            <label className="form-control mt-8 w-full">
+              <input
+                type="email"
+                placeholder="Email"
+                className="input input-bordered input-lg w-full"
+                {...field}
+              />
+              {error && (
+                <div className="label">
+                  <span className="label-text text-red-400">
+                    {error.message}
+                  </span>
+                </div>
+              )}
+            </label>
+          )}
+        />
+
+        <Controller
+          name="phoneNumber"
+          control={control}
+          render={({ field, fieldState: { error } }) => (
+            <label className="form-control mt-4 w-full">
+              <input
+                type="text"
+                placeholder="Phone number"
+                className="input input-bordered input-lg w-full"
+                {...field}
+              />
+              {error && (
+                <div className="label">
+                  <span className="label-text text-red-400">
+                    {error.message}
+                  </span>
+                </div>
+              )}
+            </label>
+          )}
+        />
+
+        <div className="card-actions mt-6 w-full justify-end">
+          <button type="submit" className="btn btn-primary btn-lg w-full">
+            {isPending ? (
+              <span className="loading loading-spinner"></span>
+            ) : (
+              "Save"
+            )}
+          </button>
+        </div>
+      </form>
+    </>
   )
 }

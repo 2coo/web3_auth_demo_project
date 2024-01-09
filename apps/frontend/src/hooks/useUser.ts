@@ -4,7 +4,7 @@ import { useAuthStore } from "~/store/useAuthStore"
 import { UserInfo } from "~/types/user"
 
 const fetchUser = async () => {
-  const response = await fetch("/api/user")
+  const response = await fetch("/api/user/me")
   const json = await response.json()
   if (response.status === 401) {
     const setAuthStatus = useAuthStore.getState().setAuthStatus
