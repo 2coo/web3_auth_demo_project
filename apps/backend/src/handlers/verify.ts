@@ -4,7 +4,7 @@ import { SiweErrorType, SiweMessage } from "siwe"
 export const verify = async (req: Request, res: Response) => {
   try {
     const { message, signature } = req.body as {
-      message: string
+      message: string | Partial<SiweMessage>
       signature: string
     }
 
@@ -12,6 +12,7 @@ export const verify = async (req: Request, res: Response) => {
     const fields = await siweMessage.verify({
       signature,
       nonce: String(req.session?.nonce ?? ""),
+      domain: process.env.DOMAIN ?? "http://localhost:5173",
     })
 
     if (fields.data.nonce !== req.session?.nonce) {
